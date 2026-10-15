@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Panel from "./components/Panel.jsx";
 import ChamadoList from "./components/ChamadoList.jsx";
+import ChamadoForm from "./components/ChamadoForm.jsx";
 import { initialTickets } from "./data/chamados.js";
 
 export default function App() {
@@ -25,6 +26,17 @@ export default function App() {
     setChamados((atuais) => atuais.filter((chamado) => chamado.id !== id));
   }
 
+  // Recebe dados já validados pelo formulário e adiciona um novo chamado aberto.
+  function cadastrarChamado(assunto, setor) {
+    const novoChamado = {
+      id: `chamado-${Date.now()}`,
+      title: assunto,
+      sector: setor,
+      resolved: false,
+    };
+    setChamados((atuais) => [...atuais, novoChamado]);
+  }
+
   return (
     <main className="app">
       <header className="hero">
@@ -37,6 +49,10 @@ export default function App() {
         <p className="summary">
           {resolvidos} de {total} chamados resolvidos
         </p>
+      </Panel>
+
+      <Panel title="Novo chamado">
+        <ChamadoForm onCadastrar={cadastrarChamado} />
       </Panel>
 
       <Panel title="Chamados">
