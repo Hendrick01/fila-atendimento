@@ -13,9 +13,10 @@ uma tela estática em uma aplicação com componentes, estado, formulário e per
   define os scripts `npm run dev`, `npm run build` e `npm run preview`.
 - `src/main.jsx`: ponto de entrada. Encontra a `div#root` do `index.html`,
   cria a raiz do React e renderiza o componente `App`.
-- `src/App.jsx`: componente principal. Guarda o estado dos chamados, define as
-  ações (resolver, reabrir, excluir, cadastrar) e monta a página com os demais
-  componentes.
+- `src/App.jsx`: componente principal. Monta a página com os demais componentes.
+- `src/context/ChamadosContext.jsx`: contexto e Provider que guardam os
+  chamados, leem e salvam no `localStorage`, atualizam o título da aba e
+  oferecem as ações (cadastrar, resolver/reabrir, excluir).
 - `src/components/`: componentes reutilizáveis da interface.
 - `src/data/chamados.js`: os quatro chamados iniciais.
 

@@ -1,5 +1,6 @@
 // Exibe um único chamado. Recebe os dados por props e não os altera.
-// Os cliques nos botões apenas avisam o App, chamando as funções recebidas com o id.
+// Os cliques nos botões apenas avisam quem renderizou o cartão (ChamadoList),
+// chamando as funções recebidas por props com o id.
 export default function ChamadoCard({ chamado, onAlternar, onExcluir }) {
   const { id, title, sector, resolved } = chamado;
 

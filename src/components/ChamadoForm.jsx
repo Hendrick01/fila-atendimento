@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ChamadosContext } from "../context/ChamadosContext.jsx";
 
 const CAMPOS_VAZIOS = { assunto: "", setor: "" };
 
 // Formulário controlado: os valores dos campos ficam em um único estado (objeto).
-// Quando os dados são válidos, entrega assunto e setor ao App por onCadastrar.
-export default function ChamadoForm({ onCadastrar }) {
+// Quando os dados são válidos, chama cadastrarChamado, obtida do contexto.
+export default function ChamadoForm() {
+  const contexto = useContext(ChamadosContext);
   const [campos, setCampos] = useState(CAMPOS_VAZIOS);
   const [erro, setErro] = useState("");
+
+  if (contexto === null) {
+    throw new Error("ChamadoForm precisa estar dentro de <ChamadosProvider>.");
+  }
+
+  const { cadastrarChamado } = contexto;
 
   // Um único handler para os dois campos: o atributo name diz qual chave atualizar.
   function handleChange(event) {
@@ -25,7 +33,7 @@ export default function ChamadoForm({ onCadastrar }) {
       return; // os campos continuam com o que foi digitado
     }
 
-    onCadastrar(assunto, setor);
+    cadastrarChamado(assunto, setor);
     setCampos(CAMPOS_VAZIOS);
     setErro("");
   }
