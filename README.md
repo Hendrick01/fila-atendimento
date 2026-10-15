@@ -12,8 +12,12 @@ uma tela estática em uma aplicação com componentes, estado, formulário e per
 - `package.json`: identifica o projeto, lista as dependências (React, Vite) e
   define os scripts `npm run dev`, `npm run build` e `npm run preview`.
 - `src/main.jsx`: ponto de entrada. Encontra a `div#root` do `index.html`,
+  envolve a aplicação com `BrowserRouter` e `ChamadosProvider`,
   cria a raiz do React e renderiza o componente `App`.
-- `src/App.jsx`: componente principal. Monta a página com os demais componentes.
+- `src/App.jsx`: componente principal. Monta o menu (`NavLink`) e define as
+  rotas (`Routes` e `Route`): `/`, `/novo`, `/sobre` e a página não encontrada.
+- `src/pages/`: uma página por rota (`FilaPage`, `NovoChamadoPage`,
+  `SobrePage`, `NaoEncontradaPage`).
 - `src/context/ChamadosContext.jsx`: contexto e Provider que guardam os
   chamados, leem e salvam no `localStorage`, atualizam o título da aba e
   oferecem as ações (cadastrar, resolver/reabrir, excluir).

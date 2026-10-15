@@ -1,40 +1,40 @@
-import { useContext } from "react";
+import { NavLink, Route, Routes } from "react-router";
 import "./App.css";
-import Panel from "./components/Panel.jsx";
-import ChamadoList from "./components/ChamadoList.jsx";
-import ChamadoForm from "./components/ChamadoForm.jsx";
-import { ChamadosContext } from "./context/ChamadosContext.jsx";
+import FilaPage from "./pages/FilaPage.jsx";
+import NovoChamadoPage from "./pages/NovoChamadoPage.jsx";
+import SobrePage from "./pages/SobrePage.jsx";
+import NaoEncontradaPage from "./pages/NaoEncontradaPage.jsx";
 
-// O App só monta a página. Os chamados e as ações ficam no ChamadosProvider.
+// O App monta o menu e decide qual página mostrar conforme a URL.
+// Os chamados e as ações ficam no ChamadosProvider.
 export default function App() {
-  const contexto = useContext(ChamadosContext);
-  if (contexto === null) {
-    throw new Error("App precisa estar dentro de <ChamadosProvider>.");
-  }
-
-  const { total, resolvidos } = contexto;
-
   return (
-    <main className="app">
-      <header className="hero">
-        <p className="eyebrow">ITEAM · SUPORTE</p>
-        <h1>Fila de Atendimento</h1>
-        <p>Organize os chamados recebidos pelos setores.</p>
+    <>
+      <header className="app-header">
+        <strong>ITEAM · Suporte</strong>
+        <nav>
+          <NavLink to="/" end>
+            Fila
+          </NavLink>
+          <NavLink to="/novo">Novo chamado</NavLink>
+          <NavLink to="/sobre">Sobre</NavLink>
+        </nav>
       </header>
 
-      <Panel title="Resumo">
-        <p className="summary">
-          {resolvidos} de {total} chamados resolvidos
-        </p>
-      </Panel>
+      <main className="app">
+        <header className="hero">
+          <p className="eyebrow">ITEAM · SUPORTE</p>
+          <h1>Fila de Atendimento</h1>
+          <p>Organize os chamados recebidos pelos setores.</p>
+        </header>
 
-      <Panel title="Novo chamado">
-        <ChamadoForm />
-      </Panel>
-
-      <Panel title="Chamados">
-        <ChamadoList />
-      </Panel>
-    </main>
+        <Routes>
+          <Route path="/" element={<FilaPage />} />
+          <Route path="/novo" element={<NovoChamadoPage />} />
+          <Route path="/sobre" element={<SobrePage />} />
+          <Route path="*" element={<NaoEncontradaPage />} />
+        </Routes>
+      </main>
+    </>
   );
 }

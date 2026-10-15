@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { Link } from "react-router";
 import { ChamadosContext } from "../context/ChamadosContext.jsx";
 
 const CAMPOS_VAZIOS = { assunto: "", setor: "" };
@@ -9,6 +10,7 @@ export default function ChamadoForm() {
   const contexto = useContext(ChamadosContext);
   const [campos, setCampos] = useState(CAMPOS_VAZIOS);
   const [erro, setErro] = useState("");
+  const [cadastrado, setCadastrado] = useState(false);
 
   if (contexto === null) {
     throw new Error("ChamadoForm precisa estar dentro de <ChamadosProvider>.");
@@ -30,12 +32,14 @@ export default function ChamadoForm() {
 
     if (assunto === "" || setor === "") {
       setErro("Preencha o assunto e o setor.");
+      setCadastrado(false);
       return; // os campos continuam com o que foi digitado
     }
 
     cadastrarChamado(assunto, setor);
     setCampos(CAMPOS_VAZIOS);
     setErro("");
+    setCadastrado(true);
   }
 
   return (
@@ -65,6 +69,12 @@ export default function ChamadoForm() {
       </div>
 
       {erro && <p className="form-error">{erro}</p>}
+
+      {cadastrado && (
+        <p className="notice">
+          Chamado cadastrado. <Link to="/">Ver a fila</Link>
+        </p>
+      )}
 
       <div>
         <button type="submit">Cadastrar chamado</button>
