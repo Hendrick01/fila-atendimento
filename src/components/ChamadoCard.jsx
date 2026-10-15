@@ -1,6 +1,6 @@
 // Exibe um único chamado. Recebe os dados por props e não os altera.
-// O clique no botão apenas avisa o App, chamando a função recebida com o id.
-export default function ChamadoCard({ chamado, onAlternar }) {
+// Os cliques nos botões apenas avisam o App, chamando as funções recebidas com o id.
+export default function ChamadoCard({ chamado, onAlternar, onExcluir }) {
   const { id, title, sector, resolved } = chamado;
 
   return (
@@ -16,6 +16,9 @@ export default function ChamadoCard({ chamado, onAlternar }) {
         </span>
         <button type="button" onClick={() => onAlternar(id)}>
           {resolved ? "Reabrir" : "Resolver"}
+        </button>
+        <button type="button" className="secondary" onClick={() => onExcluir(id)}>
+          Excluir
         </button>
       </div>
     </article>

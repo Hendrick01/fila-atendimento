@@ -1,15 +1,28 @@
+import { useState } from "react";
 import "./App.css";
 import Panel from "./components/Panel.jsx";
 import ChamadoList from "./components/ChamadoList.jsx";
 import { initialTickets } from "./data/chamados.js";
 
 export default function App() {
-  const total = initialTickets.length;
-  const resolvidos = initialTickets.filter((chamado) => chamado.resolved).length;
+  const [chamados, setChamados] = useState(initialTickets);
 
-  // Recebe o id vindo do cartão clicado.
+  // Valores derivados do array: recalculados a cada renderização, sem estado extra.
+  const total = chamados.length;
+  const resolvidos = chamados.filter((chamado) => chamado.resolved).length;
+
+  // Cria um novo array; só o chamado com o id clicado ganha um novo objeto.
   function alternarSituacao(id) {
-    console.log("Chamado clicado:", id);
+    setChamados((atuais) =>
+      atuais.map((chamado) =>
+        chamado.id === id ? { ...chamado, resolved: !chamado.resolved } : chamado,
+      ),
+    );
+  }
+
+  // Cria um novo array sem o chamado escolhido.
+  function excluirChamado(id) {
+    setChamados((atuais) => atuais.filter((chamado) => chamado.id !== id));
   }
 
   return (
@@ -27,7 +40,11 @@ export default function App() {
       </Panel>
 
       <Panel title="Chamados">
-        <ChamadoList chamados={initialTickets} onAlternar={alternarSituacao} />
+        <ChamadoList
+          chamados={chamados}
+          onAlternar={alternarSituacao}
+          onExcluir={excluirChamado}
+        />
       </Panel>
     </main>
   );
