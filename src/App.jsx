@@ -1,8 +1,17 @@
 import "./App.css";
+import Panel from "./components/Panel.jsx";
 import ChamadoList from "./components/ChamadoList.jsx";
 import { initialTickets } from "./data/chamados.js";
 
 export default function App() {
+  const total = initialTickets.length;
+  const resolvidos = initialTickets.filter((chamado) => chamado.resolved).length;
+
+  // Recebe o id vindo do cartão clicado.
+  function alternarSituacao(id) {
+    console.log("Chamado clicado:", id);
+  }
+
   return (
     <main className="app">
       <header className="hero">
@@ -11,14 +20,15 @@ export default function App() {
         <p>Organize os chamados recebidos pelos setores.</p>
       </header>
 
-      <section className="panel">
-        <div className="panel-header">
-          <h2>Chamados</h2>
-        </div>
-        <div className="panel-content">
-          <ChamadoList chamados={initialTickets} />
-        </div>
-      </section>
+      <Panel title="Resumo">
+        <p className="summary">
+          {resolvidos} de {total} chamados resolvidos
+        </p>
+      </Panel>
+
+      <Panel title="Chamados">
+        <ChamadoList chamados={initialTickets} onAlternar={alternarSituacao} />
+      </Panel>
     </main>
   );
 }
